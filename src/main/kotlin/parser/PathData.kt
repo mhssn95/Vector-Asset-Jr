@@ -6,10 +6,6 @@ data class PathData(val data: String) {
 
     private val _data = data.replace(",", " ").replace(Regex("(?<=\\d)\\s+(?=\\d|-)"), ",").replace(Regex("\\s+"), "").replace(Regex("(?<=(\\.\\d+))\\."), ",.")
 
-    init {
-        println(_data)
-    }
-
     private var lastAction: Path.Action? = null
     private var pointer = 0
 

@@ -7,26 +7,32 @@ import model.SvgElement
 import model.elements.*
 import model.style.Style
 import model.style.brush.fill.SolidColor
+import org.w3c.dom.Document
 import org.w3c.dom.Node
+import org.xml.sax.InputSource
 import java.io.File
 import java.io.InputStream
+import java.io.StringReader
 import javax.xml.parsers.DocumentBuilderFactory
 
 class SvgParser {
 
-    fun parseSvg(svg: File): Svg {
+    fun parseSvg(svg: File): Svg? {
         return parseSvg(svg.inputStream())
     }
 
-    fun parseSvg(svg: String): Svg {
+    fun parseSvg(svg: String): Svg? {
         return parseSvg(svg.byteInputStream())
     }
 
-    private fun parseSvg(inputStream: InputStream): Svg {
+    private fun parseSvg(inputStream: InputStream): Svg? {
         val factory = DocumentBuilderFactory.newInstance()
         val builder = factory.newDocumentBuilder()
+        builder.setEntityResolver { _, _ ->
+            InputSource(StringReader(""))
+        }
         val document = builder.parse(inputStream)
-        val node = document.firstChild
+        val node = getSvgNode(document) ?: return null
         val svg = Svg(512f, 512f, 512f, 512f)
         fetch(node) {
             svg.addElement(it)
@@ -156,5 +162,15 @@ class SvgParser {
         val fillAttr = node.getAttr("fill")
         val fill = fillAttr?.let { SolidColor(fillAttr) }
         return Style(fill = fill, null)
+    }
+
+    private fun getSvgNode(document: Document): Node? {
+        val children = document.childNodes
+        repeat(children.length) {
+            if (children.item(it).nodeName == "svg" && children.item(it).hasChildNodes()) {
+                return children.item(it)
+            }
+        }
+        return null
     }
 }
