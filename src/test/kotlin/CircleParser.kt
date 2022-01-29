@@ -1,6 +1,7 @@
 import ext.nextFloat
 import model.Svg
 import model.elements.Path
+import model.style.Style
 import org.junit.Test
 import parser.SvgParser
 import utils.ElementsUtils.randomCircle
@@ -60,8 +61,7 @@ class CircleParser {
                 Path.Action.Move(-circle.radius, 0f, true),
                 Path.Action.Arc(circle.radius, circle.radius, 0f, 1, 1, circle.radius * 2, 0f),
                 Path.Action.Arc(circle.radius, circle.radius, 0f, 1, 1, -circle.radius * 2, 0f)
-            ),
-            emptySet()
+            )
         )
         assert(circle.toPath() == path)
     }

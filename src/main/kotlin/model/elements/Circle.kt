@@ -4,7 +4,7 @@ import model.PathConverter
 import model.SvgElement
 import model.style.Style
 
-data class Circle(val cx: Float, val cy: Float, val radius: Float, override var style: Style) :
+data class Circle(val cx: Float, val cy: Float, val radius: Float, override var style: Style = Style()) :
     SvgElement(style), PathConverter {
 
     companion object {

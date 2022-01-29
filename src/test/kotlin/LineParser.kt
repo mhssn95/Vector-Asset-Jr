@@ -68,7 +68,7 @@ class LineParser {
             listOf(
                 Path.Action.Move(line.x1, line.y1),
                 Path.Action.LineTo(line.x2, line.y2)
-            ), emptySet()
+            )
         )
         assert(line.toPath() == path)
     }

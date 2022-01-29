@@ -4,7 +4,7 @@ import model.PathConverter
 import model.SvgElement
 import model.style.Style
 
-class Group(override var style: Style) : SvgElement(style) {
+class Group(override var style: Style = Style()) : SvgElement(style) {
 
     companion object {
         const val NodeName = "g"

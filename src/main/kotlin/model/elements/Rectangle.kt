@@ -10,7 +10,8 @@ data class Rectangle(
     val rx: Float? = null,
     val ry: Float? = null,
     val width: Float,
-    val height: Float, override var style: Style
+    val height: Float,
+    override var style: Style = Style()
 ) : SvgElement(style), PathConverter {
 
     companion object {

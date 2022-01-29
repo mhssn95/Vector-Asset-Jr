@@ -3,8 +3,8 @@ package model.style
 import model.style.brush.Brush
 
 data class Style(
-    val fill: Brush?,
-    val opacity: Float?,
+    val fill: Brush? = null,
+    val opacity: Float? = null,
 ) {
 
     fun fillStyle(style: Style): Style {

@@ -103,8 +103,7 @@ class RectangleParser {
                 Path.Action.VerticalLine(rect.height, true),
                 Path.Action.HorizontalLine(-rect.width, true),
                 Path.Action.Close
-            ),
-            emptySet()
+            )
         )
         assert(rect.toPath() == path)
     }
@@ -128,8 +127,7 @@ class RectangleParser {
                 Path.Action.LineTo(x, y + ry),
                 Path.Action.Arc(rx, ry, 0f, 0, 1, x + rx, y),
                 Path.Action.Close
-            ),
-            emptySet()
+            )
         )
         assert(rect.toPath() == path)
     }

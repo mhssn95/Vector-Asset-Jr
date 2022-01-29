@@ -4,7 +4,7 @@ import model.PathConverter
 import model.SvgElement
 import model.style.Style
 
-data class Ellipse(val cx: Float, val cy: Float, val rx: Float, val ry: Float, override var style: Style) :
+data class Ellipse(val cx: Float, val cy: Float, val rx: Float, val ry: Float, override var style: Style = Style()) :
     SvgElement(
         style
     ), PathConverter {

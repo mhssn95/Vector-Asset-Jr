@@ -37,7 +37,7 @@ object ElementsUtils {
         } else {
             null
         }
-        return Rectangle(x, y, rx, ry, width, height, emptySet())
+        return Rectangle(x, y, rx, ry, width, height)
     }
 
     fun randomLine(
@@ -46,7 +46,7 @@ object ElementsUtils {
         x2: Float = Random.nextFloat(512),
         y2: Float = Random.nextFloat(512)
     ): Line {
-        return Line(x1, y1, x2, y2, emptySet())
+        return Line(x1, y1, x2, y2)
     }
 
     fun randomCircle(
@@ -54,7 +54,7 @@ object ElementsUtils {
         cy: Float = Random.nextFloat(512),
         radius: Float = Random.nextFloat(512)
     ): Circle {
-        return Circle(cx, cy, radius, emptySet())
+        return Circle(cx, cy, radius)
     }
 
     fun randomEllipse(
@@ -63,7 +63,7 @@ object ElementsUtils {
         rx: Float = Random.nextFloat(512),
         ry: Float = Random.nextFloat(512)
     ): Ellipse {
-        return Ellipse(cx, cy, rx, ry, emptySet())
+        return Ellipse(cx, cy, rx, ry)
     }
 
     fun randomPolygon(pointsPairLength: Int = Random.nextInt(1, 100)): Polygon {
@@ -71,7 +71,7 @@ object ElementsUtils {
         repeat(pointsPairLength) {
             points.add(Point(Random.nextFloat(255), Random.nextFloat(255)))
         }
-        return Polygon(points, emptySet())
+        return Polygon(points)
     }
 
     fun randomPolyline(pointsPairLength: Int = Random.nextInt(1, 100)): Polygon {
@@ -79,7 +79,7 @@ object ElementsUtils {
         repeat(pointsPairLength) {
             points.add(Point(Random.nextFloat(255), Random.nextFloat(255)))
         }
-        return Polygon(points, emptySet())
+        return Polygon(points)
     }
 
     fun randomPath(
@@ -199,7 +199,7 @@ object ElementsUtils {
                 }
             )
         }
-        return Path(actions, emptySet())
+        return Path(actions)
     }
 
 }

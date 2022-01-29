@@ -4,7 +4,7 @@ import model.PathConverter
 import model.SvgElement
 import model.style.Style
 
-data class Line(val x1: Float, val y1: Float, val x2: Float, val y2: Float, override var style: Style) :
+data class Line(val x1: Float, val y1: Float, val x2: Float, val y2: Float, override var style: Style = Style()) :
     SvgElement(
         style
     ), PathConverter {

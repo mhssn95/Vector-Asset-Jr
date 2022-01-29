@@ -54,7 +54,7 @@ class PolylineParser {
             }
         }
         actions.add(Path.Action.Close)
-        val path = Path(actions, emptySet())
+        val path = Path(actions)
         assert(polyline.toPath() == path)
     }
 

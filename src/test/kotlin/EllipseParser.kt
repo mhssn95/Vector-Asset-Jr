@@ -70,8 +70,7 @@ class EllipseParser {
                 Path.Action.Arc(ellipse.rx, ellipse.ry, 0f, 1, 0, ellipse.rx * 2, 0f, true),
                 Path.Action.Arc(ellipse.rx, ellipse.ry, 0f, 1, 0, -ellipse.rx*2, 0f, true),
                 Path.Action.Close
-            ),
-            emptySet()
+            )
         )
         assert(ellipse.toPath() == path)
     }

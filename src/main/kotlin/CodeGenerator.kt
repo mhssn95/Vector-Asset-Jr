@@ -72,7 +72,7 @@ class CodeGenerator {
             builder.addImport(ClassName(it.first, it.second), "")
         }
         builder.build()
-            .writeTo(File("./"))
+            .writeTo(File(".output/"))
 
     }
 

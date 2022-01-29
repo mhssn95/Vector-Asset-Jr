@@ -54,7 +54,7 @@ class PolygonParser {
             }
         }
         actions.add(Path.Action.Close)
-        val path = Path(actions, emptySet())
+        val path = Path(actions)
         assert(polygon.toPath() == path)
     }
 

@@ -4,7 +4,7 @@ import model.PathConverter
 import model.SvgElement
 import model.style.Style
 
-data class Path(val actions: List<Action>, override var style: Style) : SvgElement(style), PathConverter {
+data class Path(val actions: List<Action>, override var style: Style = Style()) : SvgElement(style), PathConverter {
 
     companion object {
         const val NodeName = "path"
