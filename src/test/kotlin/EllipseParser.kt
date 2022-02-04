@@ -18,7 +18,7 @@ class EllipseParser {
         a.addElement(ellipse)
         val svgText = a.toString()
         val b = svgParser.parseSvg(svgText)
-        assert(b.elements.contains(ellipse))
+        assert(b?.elements?.contains(ellipse)?:false)
     }
 
     @Test(expected = IllegalArgumentException::class)

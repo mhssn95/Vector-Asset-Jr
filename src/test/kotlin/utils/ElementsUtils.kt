@@ -1,3 +1,5 @@
+@file:Suppress("NAME_SHADOWING")
+
 package utils
 
 import ext.nextFloat

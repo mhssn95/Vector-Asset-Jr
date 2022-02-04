@@ -19,7 +19,7 @@ class CircleParser {
         a.addElement(circle)
         val svgText = a.toString()
         val b = svgParser.parseSvg(svgText)
-        assert(b.elements.contains(circle))
+        assert(b?.elements?.contains(circle)?:false)
     }
 
     @Test(expected = IllegalArgumentException::class)

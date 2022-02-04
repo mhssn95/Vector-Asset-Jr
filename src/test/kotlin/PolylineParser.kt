@@ -19,7 +19,7 @@ class PolylineParser {
         a.addElement(polyline)
         val svgText = a.toString()
         val b = svgParser.parseSvg(svgText)
-        assert(b.elements.contains(polyline))
+        assert(b?.elements?.contains(polyline) ?: false)
     }
 
     @Test(expected = IllegalArgumentException::class)

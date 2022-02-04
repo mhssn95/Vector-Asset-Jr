@@ -133,7 +133,7 @@ class CodeGenerator {
                                 it.horizontalRadius,
                                 it.verticalRadius,
                                 it.degree,
-                                it.isMoreThanHalf == 0,
+                                it.largeArc == 0,
                                 it.isPositiveArc == 0,
                                 it.x,
                                 it.y

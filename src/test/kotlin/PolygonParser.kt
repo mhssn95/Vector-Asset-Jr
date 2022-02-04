@@ -19,7 +19,7 @@ class PolygonParser {
         a.addElement(polygon)
         val svgText = a.toString()
         val b = svgParser.parseSvg(svgText)
-        assert(b.elements.contains(polygon))
+        assert(b?.elements?.contains(polygon)?:false)
     }
 
     @Test(expected = IllegalArgumentException::class)

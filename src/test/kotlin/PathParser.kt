@@ -18,7 +18,7 @@ class PathParser {
         val svgText = a.toString()
         println(svgText)
         val b = svgParser.parseSvg(svgText)
-        assert(b.elements.contains(path))
+        assert(b?.elements?.contains(path) ?: false)
     }
 
     @Test

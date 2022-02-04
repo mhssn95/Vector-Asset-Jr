@@ -18,7 +18,7 @@ class RectangleParser {
         a.addElement(rect)
         val svgText = a.toString()
         val b = svgParser.parseSvg(svgText)
-        assert(b.elements.contains(rect))
+        assert(b?.elements?.contains(rect) ?: false)
     }
 
     @Test
@@ -28,7 +28,7 @@ class RectangleParser {
         a.addElement(rect)
         val svgText = a.toString()
         val b = svgParser.parseSvg(svgText)
-        assert(b.elements.contains(rect))
+        assert(b?.elements?.contains(rect) ?: false)
     }
 
     @Test
@@ -38,7 +38,7 @@ class RectangleParser {
         a.addElement(rect)
         val svgText = a.toString()
         val b = svgParser.parseSvg(svgText)
-        assert(b.elements.contains(rect))
+        assert(b?.elements?.contains(rect) ?: false)
     }
 
     @Test
@@ -48,7 +48,7 @@ class RectangleParser {
         a.addElement(rect)
         val svgText = a.toString()
         val b = svgParser.parseSvg(svgText)
-        assert(b.elements.contains(rect))
+        assert(b?.elements?.contains(rect) ?: false)
     }
 
     @Test
@@ -58,7 +58,7 @@ class RectangleParser {
         a.addElement(rect)
         val svgText = a.toString()
         val b = svgParser.parseSvg(svgText)
-        assert(b.elements.contains(rect))
+        assert(b?.elements?.contains(rect) ?: false)
     }
 
     @Test
@@ -68,7 +68,7 @@ class RectangleParser {
         a.addElement(rect)
         val svgText = a.toString()
         val b = svgParser.parseSvg(svgText)
-        assert(b.elements.contains(rect))
+        assert(b?.elements?.contains(rect) ?: false)
     }
 
     @Test(expected = IllegalArgumentException::class)

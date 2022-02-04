@@ -4,7 +4,7 @@ import model.elements.Path
 
 data class PathData(val data: String) {
 
-    private val _data = data.replace(",", " ").replace(Regex("(?<=\\d)\\s+(?=\\d|-)"), ",").replace(Regex("\\s+"), "").replace(Regex("(?<=(\\.\\d+))\\."), ",.")
+    private val _data = data.replace(",", " ").replace(Regex("(?<=\\d)\\s+(?=\\d|-)"), ",").replace(Regex("\\s+"), "").replace(Regex("(?<=(\\.\\d+))\\."), ",.").replace(Regex("(?<=(\\d))-"), ",-")
 
     private var lastAction: Path.Action? = null
     private var pointer = 0
@@ -170,7 +170,6 @@ data class PathData(val data: String) {
 
 
     internal fun readNextNumber(isLastNumber: Boolean = false): Float {
-        val hasPoint = false
         val stringBuilder = StringBuilder()
         while (hasData() && numbers.contains(_data[pointer])) {
             stringBuilder.append(_data[pointer])

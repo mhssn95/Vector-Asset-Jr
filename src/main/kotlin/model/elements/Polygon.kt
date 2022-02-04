@@ -5,7 +5,7 @@ import model.Point
 import model.SvgElement
 import model.style.Style
 
-data class Polygon(val points: List<Point>, override var style: Style = Style()): SvgElement(style), PathConverter {
+data class Polygon(val points: List<Point>, override var style: Style = Style()) : SvgElement(style), PathConverter {
 
     companion object {
         const val NodeName = "polygon"

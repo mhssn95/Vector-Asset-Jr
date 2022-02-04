@@ -18,7 +18,7 @@ class LineParser {
         a.addElement(line)
         val svgText = a.toString()
         val b = svgParser.parseSvg(svgText)
-        assert(b.elements.contains(line))
+        assert(b?.elements?.contains(line) ?: false)
     }
 
     @Test(expected = IllegalArgumentException::class)
