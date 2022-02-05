@@ -9,6 +9,6 @@ class Svg(val width: Float, val height: Float, val viewportWidth: Float, val vie
     }
 
     override fun toString(): String {
-        return "<svg>\n${elements.joinToString { "\t${it.toXml()}\n" }}</svg>"
+        return "<svg width=\"$width\" height=\"$height\" viewBox=\"0 0 $viewportWidth $viewportHeight\" >\n${elements.joinToString { "\t${it.toXml()}\n" }}</svg>"
     }
 }

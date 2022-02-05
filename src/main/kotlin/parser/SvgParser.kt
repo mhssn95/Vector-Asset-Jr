@@ -2,6 +2,7 @@ package parser
 
 import getAttr
 import model.Point
+import model.Size
 import model.Svg
 import model.SvgElement
 import model.elements.*
@@ -13,6 +14,7 @@ import org.xml.sax.InputSource
 import java.io.File
 import java.io.InputStream
 import java.io.StringReader
+import java.lang.Exception
 import javax.xml.parsers.DocumentBuilderFactory
 
 class SvgParser {
@@ -33,7 +35,15 @@ class SvgParser {
         }
         val document = builder.parse(inputStream)
         val node = getSvgNode(document) ?: return null
-        val svg = Svg(512f, 512f, 512f, 512f)
+        var size = getSvgSize(node)
+        val viewBox = getSvgViewBox(node) ?: size
+        if (size == null) {
+            size = viewBox
+        }
+        if (size == null) {
+            throw IllegalArgumentException("invalid size")
+        }
+        val svg = Svg(size.width, size.height, viewBox!!.width, viewBox.height)
         fetch(node) {
             svg.addElement(it)
         }
@@ -164,10 +174,51 @@ class SvgParser {
         return Style(fill = fill, null)
     }
 
+    private fun getSvgSize(node: Node): Size? {
+        var width = node.getAttr("width")?.toFloatOrNull()
+        val height = node.getAttr("height")?.toFloatOrNull() ?: width
+        if (width == null) {
+            width = height
+        }
+        if (width == null || width <= 0 || height!! <= 0) {
+            return null
+        }
+        return Size(width, height)
+    }
+
+    private fun getSvgViewBox(node: Node): Size? {
+        try {
+            val viewBox = node.getAttr("viewBox") ?: return null
+            val data = PathData(viewBox)
+            val l = data.readNextNumber()
+            val t = data.readNextNumber()
+            val r = data.readNextNumber()
+            val b = data.readNextNumber()
+            if (l <= 0 || t <= 0 || r <= 0 || b <= 0) {
+                return null
+            }
+            return Size((r - l).let {
+                if (it >= 0) {
+                    it
+                } else {
+                    0f
+                }
+            }, (b - t).let {
+                if (it >= 0) {
+                    it
+                } else {
+                    0f
+                }
+            })
+        } catch (e: Exception) {
+            return null
+        }
+    }
+
     private fun getSvgNode(document: Document): Node? {
         val children = document.childNodes
         repeat(children.length) {
-            if (children.item(it).nodeName == "svg" && children.item(it).hasChildNodes()) {
+            if (children.item(it).nodeName == "svg" && (children.item(it).hasChildNodes() || children.length == 1)) {
                 return children.item(it)
             }
         }
