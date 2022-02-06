@@ -194,7 +194,7 @@ class SvgParser {
             val t = data.readNextNumber()
             val r = data.readNextNumber()
             val b = data.readNextNumber()
-            if (l <= 0 || t <= 0 || r <= 0 || b <= 0) {
+            if (l < 0 || t < 0 || r < 0 || b < 0) {
                 return null
             }
             return Size((r - l).let {
