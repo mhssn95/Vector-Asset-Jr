@@ -3,9 +3,14 @@ package model.elements
 import model.PathConverter
 import model.Point
 import model.SvgElement
+import model.Transform
 import model.style.Style
 
-data class Polyline(val points: List<Point>, override var style: Style = Style()): SvgElement(style), PathConverter {
+data class Polyline(
+    val points: List<Point>,
+    override var style: Style = Style(),
+    override var transform: List<Transform>
+) : SvgElement(style, transform), PathConverter {
 
     companion object {
         const val NodeName = "polyline"
@@ -18,7 +23,7 @@ data class Polyline(val points: List<Point>, override var style: Style = Style()
             } else {
                 Path.Action.LineTo(point.x, point.y)
             }
-        } + Path.Action.Close, style)
+        } + Path.Action.Close, style, transform).getTransformedPath()
     }
 
     override fun toXml(): String {

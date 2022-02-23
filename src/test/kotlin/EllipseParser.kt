@@ -1,4 +1,4 @@
-import ext.nextFloat
+import ext.nextDouble
 import model.Svg
 import model.elements.Path
 import org.junit.Test
@@ -13,8 +13,8 @@ class EllipseParser {
 
     @Test
     fun `parse ellipse`() {
-        val ellipse = randomEllipse()
-        val a = Svg(Random.nextFloat(255), Random.nextFloat(255), Random.nextFloat(255), Random.nextFloat(255))
+        val ellipse = randomEllipse(withTransform = false)
+        val a = Svg(Random.nextDouble(255), Random.nextDouble(255), Random.nextDouble(255), Random.nextDouble(255))
         a.addElement(ellipse)
         val svgText = a.toString()
         val b = svgParser.parseSvg(svgText)
@@ -25,7 +25,7 @@ class EllipseParser {
     fun `parse ellipse without cx`() {
         val svgText = """
             <svg>
-                <ellipse cy="${Random.nextFloat(512)}" rx="${Random.nextFloat(512)}" ry="${Random.nextFloat(512)}"/>
+                <ellipse cy="${Random.nextDouble(512)}" rx="${Random.nextDouble(512)}" ry="${Random.nextDouble(512)}"/>
             </svg>
         """.trimIndent()
         svgParser.parseSvg(svgText)
@@ -35,7 +35,7 @@ class EllipseParser {
     fun `parse ellipse without cy`() {
         val svgText = """
             <svg>
-                <ellipse cx="${Random.nextFloat(512)}" rx="${Random.nextFloat(512)}" ry="${Random.nextFloat(512)}"/>
+                <ellipse cx="${Random.nextDouble(512)}" rx="${Random.nextDouble(512)}" ry="${Random.nextDouble(512)}"/>
             </svg>
         """.trimIndent()
         svgParser.parseSvg(svgText)
@@ -45,7 +45,7 @@ class EllipseParser {
     fun `parse ellipse without rx`() {
         val svgText = """
             <svg>
-                <ellipse cx="${Random.nextFloat(512)}" cy="${Random.nextFloat(512)}" ry="${Random.nextFloat(512)}"/>
+                <ellipse cx="${Random.nextDouble(512)}" cy="${Random.nextDouble(512)}" ry="${Random.nextDouble(512)}"/>
             </svg>
         """.trimIndent()
         svgParser.parseSvg(svgText)
@@ -55,7 +55,7 @@ class EllipseParser {
     fun `parse ellipse without ry`() {
         val svgText = """
             <svg>
-                <ellipse cx="${Random.nextFloat(512)}" cy="${Random.nextFloat(512)}" rx="${Random.nextFloat(512)}"/>
+                <ellipse cx="${Random.nextDouble(512)}" cy="${Random.nextDouble(512)}" rx="${Random.nextDouble(512)}"/>
             </svg>
         """.trimIndent()
         svgParser.parseSvg(svgText)
@@ -63,12 +63,12 @@ class EllipseParser {
 
     @Test
     fun `convert ellipse to path`() {
-        val ellipse = randomEllipse()
+        val ellipse = randomEllipse(withTransform = false)
         val path = Path(
             listOf(
                 Path.Action.Move(ellipse.cx - ellipse.rx, ellipse.cy),
-                Path.Action.Arc(ellipse.rx, ellipse.ry, 0f, 1, 0, ellipse.rx * 2, 0f, true),
-                Path.Action.Arc(ellipse.rx, ellipse.ry, 0f, 1, 0, -ellipse.rx*2, 0f, true),
+                Path.Action.Arc(ellipse.rx, ellipse.ry, 0.0, 1, 0, ellipse.rx * 2, 0.0, true),
+                Path.Action.Arc(ellipse.rx, ellipse.ry, 0.0, 1, 0, -ellipse.rx*2, 0.0, true),
                 Path.Action.Close
             )
         )

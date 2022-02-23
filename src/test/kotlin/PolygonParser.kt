@@ -1,4 +1,4 @@
-import ext.nextFloat
+import ext.nextDouble
 import ext.nextOddInt
 import model.Svg
 import model.elements.Path
@@ -14,8 +14,8 @@ class PolygonParser {
 
     @Test
     fun `parse polygon`() {
-        val polygon = randomPolygon()
-        val a = Svg(Random.nextFloat(255), Random.nextFloat(255), Random.nextFloat(255), Random.nextFloat(255))
+        val polygon = randomPolygon(withTransform = false)
+        val a = Svg(Random.nextDouble(255), Random.nextDouble(255), Random.nextDouble(255), Random.nextDouble(255))
         a.addElement(polygon)
         val svgText = a.toString()
         val b = svgParser.parseSvg(svgText)
@@ -44,7 +44,7 @@ class PolygonParser {
 
     @Test
     fun `convert polygon to path`() {
-        val polygon = randomPolygon()
+        val polygon = randomPolygon(withTransform = false)
         val actions = ArrayList<Path.Action>()
         polygon.points.forEachIndexed { index, point ->
             if (index == 0) {

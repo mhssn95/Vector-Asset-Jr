@@ -2,11 +2,20 @@ package model.elements
 
 import model.PathConverter
 import model.SvgElement
+import model.Transform
 import model.style.Style
 
-data class Line(val x1: Float, val y1: Float, val x2: Float, val y2: Float, override var style: Style = Style()) :
+data class Line(
+    val x1: Double,
+    val y1: Double,
+    val x2: Double,
+    val y2: Double,
+    override var style: Style = Style(),
+    override var transform: List<Transform> = emptyList()
+) :
     SvgElement(
-        style
+        style,
+        transform
     ), PathConverter {
 
     companion object {
@@ -19,8 +28,9 @@ data class Line(val x1: Float, val y1: Float, val x2: Float, val y2: Float, over
                 Path.Action.Move(x1, y1),
                 Path.Action.LineTo(x2, y2)
             ),
-            style
-        )
+            style,
+            transform
+        ).getTransformedPath()
     }
 
     override fun toXml(): String {

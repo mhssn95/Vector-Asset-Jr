@@ -1,10 +1,7 @@
 package parser
 
 import getAttr
-import model.Point
-import model.Size
-import model.Svg
-import model.SvgElement
+import model.*
 import model.elements.*
 import model.style.Style
 import model.style.brush.fill.SolidColor
@@ -56,75 +53,82 @@ class SvgParser {
             when (child.nodeName) {
                 Path.NodeName -> {
                     val styles = parseStyle(child)
+                    val transform = parseTransform(child)
+                    val actions = ArrayList<Path.Action>()
+                    child.getAttr("")
                     child.getAttr("d")?.let { data ->
-                        val pathData = PathData(data)
-                        val actions = ArrayList<Path.Action>()
-                        while (pathData.hasData()) {
-                            actions.add(pathData.getAction())
+                        val pathReader = DataReader(data)
+                        while (pathReader.hasData()) {
+                            actions.add(pathReader.getAction())
                         }
-                        val path = Path(actions, styles)
-                        addElement(path)
                     }
+                    val path = Path(actions, styles, transform)
+                    addElement(path)
                 }
                 Polygon.NodeName -> {
                     val styles = parseStyle(child)
+                    val transform = parseTransform(child)
+                    val points = ArrayList<Point>()
                     child.getAttr("points")?.let { data ->
-                        val points = ArrayList<Point>()
-                        val pathData = PathData(data)
+                        val pathData = DataReader(data)
                         while (pathData.hasData()) {
                             val x = pathData.readNextNumber()
                             val y = pathData.readNextNumber()
                             points.add(Point(x, y))
                         }
-                        val polygon = Polygon(points, styles)
-                        addElement(polygon)
                     }
+                    val polygon = Polygon(points, styles, transform)
+                    addElement(polygon)
                 }
                 Polyline.NodeName -> {
                     val styles = parseStyle(child)
+                    val transform = parseTransform(child)
+                    val points = ArrayList<Point>()
                     child.getAttr("points")?.let { data ->
-                        val points = ArrayList<Point>()
-                        val pathData = PathData(data)
+                        val pathData = DataReader(data)
                         while (pathData.hasData()) {
                             val x = pathData.readNextNumber()
                             val y = pathData.readNextNumber()
                             points.add(Point(x, y))
                         }
-                        val polyline = Polyline(points, styles)
+                        val polyline = Polyline(points, styles, transform)
                         addElement(polyline)
                     }
                 }
                 Circle.NodeName -> {
                     val styles = parseStyle(child)
-                    val cx = child.getAttr("cx")?.toFloatOrNull()
-                    val cy = child.getAttr("cy")?.toFloatOrNull()
-                    val r = child.getAttr("r")?.toFloatOrNull()
+                    val transform = parseTransform(child)
+                    val cx = child.getAttr("cx")?.toDoubleOrNull()
+                    val cy = child.getAttr("cy")?.toDoubleOrNull()
+                    val r = child.getAttr("r")?.toDoubleOrNull()
                     if (cx == null || cy == null || r == null) {
                         throw IllegalArgumentException()
                     }
-                    val circle = Circle(cx, cy, r, styles)
+                    val circle = Circle(cx, cy, r, styles, transform)
                     addElement(circle)
                 }
                 Ellipse.NodeName -> {
                     val styles = parseStyle(child)
-                    val cx = child.getAttr("cx")?.toFloatOrNull()
-                    val cy = child.getAttr("cy")?.toFloatOrNull()
-                    val rx = child.getAttr("rx")?.toFloatOrNull()
-                    val ry = child.getAttr("ry")?.toFloatOrNull()
+                    val transform = parseTransform(child)
+                    val cx = child.getAttr("cx")?.toDoubleOrNull()
+                    val cy = child.getAttr("cy")?.toDoubleOrNull()
+                    val rx = child.getAttr("rx")?.toDoubleOrNull()
+                    val ry = child.getAttr("ry")?.toDoubleOrNull()
                     if (cx == null || cy == null || rx == null || ry == null) {
                         throw IllegalArgumentException()
                     }
-                    val ellipse = Ellipse(cx, cy, rx, ry, styles)
+                    val ellipse = Ellipse(cx, cy, rx, ry, styles, transform)
                     addElement(ellipse)
                 }
                 Rectangle.NodeName -> {
                     val styles = parseStyle(child)
-                    val width = child.getAttr("width")?.toFloatOrNull()
-                    val height = child.getAttr("height")?.toFloatOrNull()
-                    val x = child.getAttr("x")?.toFloatOrNull()
-                    val y = child.getAttr("y")?.toFloatOrNull()
-                    val rx = child.getAttr("rx")?.toFloatOrNull()
-                    val ry = child.getAttr("ry")?.toFloatOrNull()
+                    val transform = parseTransform(child)
+                    val width = child.getAttr("width")?.toDoubleOrNull()
+                    val height = child.getAttr("height")?.toDoubleOrNull()
+                    val x = child.getAttr("x")?.toDoubleOrNull()
+                    val y = child.getAttr("y")?.toDoubleOrNull()
+                    val rx = child.getAttr("rx")?.toDoubleOrNull()
+                    val ry = child.getAttr("ry")?.toDoubleOrNull()
                     if (width == null || height == null) {
                         throw  IllegalArgumentException()
                     }
@@ -135,26 +139,29 @@ class SvgParser {
                         ry = ry,
                         width = width,
                         height = height,
-                        styles
+                        styles,
+                        transform
                     )
                     addElement(rectangle)
                 }
                 Line.NodeName -> {
                     val styles = parseStyle(child)
-                    val x1 = child.getAttr("x1")?.toFloatOrNull()
-                    val y1 = child.getAttr("y1")?.toFloatOrNull()
-                    val x2 = child.getAttr("x2")?.toFloatOrNull()
-                    val y2 = child.getAttr("y2")?.toFloatOrNull()
+                    val transform = parseTransform(child)
+                    val x1 = child.getAttr("x1")?.toDoubleOrNull()
+                    val y1 = child.getAttr("y1")?.toDoubleOrNull()
+                    val x2 = child.getAttr("x2")?.toDoubleOrNull()
+                    val y2 = child.getAttr("y2")?.toDoubleOrNull()
                     if (x1 == null || y1 == null || x2 == null || y2 == null) {
                         throw IllegalArgumentException()
                     }
-                    val line = Line(x1, y1, x2, y2, styles)
+                    val line = Line(x1, y1, x2, y2, styles, transform)
                     addElement(line)
                 }
                 Group.NodeName -> {
                     if (child.hasChildNodes()) {
                         val styles = parseStyle(child)
-                        val group = Group(styles)
+                        val transform = parseTransform(child)
+                        val group = Group(styles, transform)
                         fetch(child) {
                             group.addElement(it)
                         }
@@ -174,9 +181,20 @@ class SvgParser {
         return Style(fill = fill, null)
     }
 
+    private fun parseTransform(node: Node): List<Transform> {
+        val transform = ArrayList<Transform>()
+        node.getAttr("transform")?.let {
+            val transformData = DataReader(it)
+            while (transformData.hasData()) {
+                transform.add(transformData.getTransform())
+            }
+        }
+        return transform
+    }
+
     private fun getSvgSize(node: Node): Size? {
-        var width = node.getAttr("width")?.toFloatOrNull()
-        val height = node.getAttr("height")?.toFloatOrNull() ?: width
+        var width = node.getAttr("width")?.toDoubleOrNull()
+        val height = node.getAttr("height")?.toDoubleOrNull() ?: width
         if (width == null) {
             width = height
         }
@@ -189,7 +207,7 @@ class SvgParser {
     private fun getSvgViewBox(node: Node): Size? {
         try {
             val viewBox = node.getAttr("viewBox") ?: return null
-            val data = PathData(viewBox)
+            val data = DataReader(viewBox)
             val l = data.readNextNumber()
             val t = data.readNextNumber()
             val r = data.readNextNumber()
@@ -201,13 +219,13 @@ class SvgParser {
                 if (it >= 0) {
                     it
                 } else {
-                    0f
+                    0.0
                 }
             }, (b - t).let {
                 if (it >= 0) {
                     it
                 } else {
-                    0f
+                    0.0
                 }
             })
         } catch (e: Exception) {

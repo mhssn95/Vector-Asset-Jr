@@ -1,4 +1,4 @@
-import ext.nextFloat
+import ext.nextDouble
 import model.Svg
 import org.junit.Test
 import parser.SvgParser
@@ -11,9 +11,9 @@ class PathParser {
 
     @Test
     fun `parse path`() {
-        val path = randomPath()
+        val path = randomPath(withTransform = false)
         println(path.toXml())
-        val a = Svg(Random.nextFloat(255), Random.nextFloat(255), Random.nextFloat(255), Random.nextFloat(255))
+        val a = Svg(Random.nextDouble(255), Random.nextDouble(255), Random.nextDouble(255), Random.nextDouble(255))
         a.addElement(path)
         val svgText = a.toString()
         println(svgText)
@@ -24,7 +24,7 @@ class PathParser {
     @Test
     fun `parse path without d`() {
         val svgText = """
-            <svg>
+            <svg width="500" height="200">
                 <path />
             </svg>
         """.trimIndent()

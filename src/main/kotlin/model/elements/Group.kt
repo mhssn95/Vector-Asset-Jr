@@ -2,9 +2,11 @@ package model.elements
 
 import model.PathConverter
 import model.SvgElement
+import model.Transform
 import model.style.Style
 
-class Group(override var style: Style = Style()) : SvgElement(style) {
+class Group(override var style: Style = Style(), override var transform: List<Transform>) :
+    SvgElement(style, transform) {
 
     companion object {
         const val NodeName = "g"
@@ -14,6 +16,7 @@ class Group(override var style: Style = Style()) : SvgElement(style) {
     val elements: List<SvgElement> = _elements
 
     fun addElement(element: SvgElement) {
+        element.transform = transform + element.transform
         element.style = element.style.fillStyle(style)
         _elements.add(element)
     }

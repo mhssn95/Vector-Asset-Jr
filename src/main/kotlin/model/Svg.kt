@@ -1,6 +1,6 @@
 package model
 
-class Svg(val width: Float, val height: Float, val viewportWidth: Float, val viewportHeight: Float) {
+class Svg(val width: Double, val height: Double, val viewportWidth: Double, val viewportHeight: Double) {
     private val _elements: MutableList<SvgElement> = ArrayList()
     val elements: List<SvgElement> = _elements
 

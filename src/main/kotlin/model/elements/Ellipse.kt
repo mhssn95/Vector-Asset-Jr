@@ -2,11 +2,20 @@ package model.elements
 
 import model.PathConverter
 import model.SvgElement
+import model.Transform
 import model.style.Style
 
-data class Ellipse(val cx: Float, val cy: Float, val rx: Float, val ry: Float, override var style: Style = Style()) :
+data class Ellipse(
+    val cx: Double,
+    val cy: Double,
+    val rx: Double,
+    val ry: Double,
+    override var style: Style = Style(),
+    override var transform: List<Transform> = emptyList()
+) :
     SvgElement(
-        style
+        style,
+        transform
     ), PathConverter {
 
     companion object {
@@ -17,12 +26,13 @@ data class Ellipse(val cx: Float, val cy: Float, val rx: Float, val ry: Float, o
         return Path(
             listOf(
                 Path.Action.Move(cx - rx, cy),
-                Path.Action.Arc(rx, ry, 0f, 1, 0, rx * 2, 0f, true),
-                Path.Action.Arc(rx, ry, 0f, 1, 0, -rx * 2, 0f, true),
+                Path.Action.Arc(rx, ry, 0.0, 1, 0, rx * 2, 0.0, true),
+                Path.Action.Arc(rx, ry, 0.0, 1, 0, -rx * 2, 0.0, true),
                 Path.Action.Close
             ),
-            style
-        )
+            style,
+            transform
+        ).getTransformedPath()
     }
 
     override fun toXml(): String {

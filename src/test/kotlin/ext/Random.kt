@@ -2,8 +2,8 @@ package ext
 
 import kotlin.random.Random
 
-fun Random.nextFloat(max: Int): Float {
-    return this.nextFloat() * max
+fun Random.nextDouble(max: Int): Double {
+    return this.nextDouble() * max
 }
 
 fun Random.nextOddInt(min: Int, max: Int): Int {
