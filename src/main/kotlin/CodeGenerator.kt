@@ -189,11 +189,11 @@ class CodeGenerator {
     }
 
     private fun styleCode(style: Style): String {
-        val code = StringBuilder()
         let { style.fill?:SolidColor() }.let {
-            "fill=\"${code.append((it as SolidColor).toHex())}\""
+            importSet.add("androidx.compose.ui.graphics" to "SolidColor")
+            importSet.add("androidx.compose.ui.graphics" to "Color")
+            return "fill = SolidColor(Color(${(it as SolidColor).toHex()}))"
         }
-        return code.toString()
     }
 
     private fun tap(count: Int): String {
