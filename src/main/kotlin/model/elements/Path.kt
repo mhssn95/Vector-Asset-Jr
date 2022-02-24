@@ -116,7 +116,7 @@ data class Path(
             }
 
             override fun toData(): Array<Double> {
-                return arrayOf(dx)
+                return arrayOf(dx, 0.0)
             }
 
             override fun toString(): String {
@@ -136,7 +136,7 @@ data class Path(
             }
 
             override fun toData(): Array<Double> {
-                return arrayOf(dy)
+                return arrayOf(dy, 0.0)
             }
 
             override fun toString(): String {

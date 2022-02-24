@@ -2,6 +2,7 @@ package model
 
 import kotlin.math.cos
 import kotlin.math.sin
+import kotlin.math.tan
 
 sealed class Transform {
     abstract fun transform(data: Array<Double>)
@@ -106,9 +107,10 @@ sealed class Transform {
 
     class SkewX(val a: Double) : Transform() {
         override fun transform(data: Array<Double>) {
+            val radian = Math.toRadians(a)
             val matrix = Matrix(
                 rowSize = 3, columnSize = 3,
-                1.0, a, 0.0,
+                1.0, tan(radian), 0.0,
                 0.0, 1.0, 0.0,
                 0.0, 0.0, 1.0
             )
@@ -127,10 +129,11 @@ sealed class Transform {
 
     class SkewY(val a: Double) : Transform() {
         override fun transform(data: Array<Double>) {
+            val radian = Math.toRadians(a)
             val matrix = Matrix(
                 rowSize = 3, columnSize = 3,
                 1.0, 0.0, 0.0,
-                a, 1.0, 0.0,
+                tan(radian), 1.0, 0.0,
                 0.0, 0.0, 1.0
             )
             data.pair { x, y, index ->

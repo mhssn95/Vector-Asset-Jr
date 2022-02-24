@@ -37,6 +37,16 @@ data class Rectangle(
             actions.add(Path.Action.Arc(rx, ry, 0.0, 0, 1, x, y + height - ry))
             actions.add(Path.Action.LineTo(x, y + ry))
             actions.add(Path.Action.Arc(rx, ry, 0.0, 0, 1, x + rx, y))
+        } else if (transform.any {
+                it is Transform.Matrix ||
+                it is Transform.Rotate ||
+                it is Transform.SkewX ||
+                it is Transform.SkewY
+            }) {
+            actions.add(Path.Action.Move(x, y))
+            actions.add(Path.Action.LineTo(width, 0.0, true))
+            actions.add(Path.Action.LineTo(0.0, height, true))
+            actions.add(Path.Action.LineTo(-width, 0.0, true))
         } else {
             actions.add(Path.Action.Move(x, y))
             actions.add(Path.Action.HorizontalLine(width, true))
