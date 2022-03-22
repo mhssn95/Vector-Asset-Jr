@@ -33,7 +33,8 @@ class MeasureUnits {
             "1in" to 96.0,
             "1mm" to 3.78,
             "1cm" to 37.795,
-            "1pc" to 16.0
+            "1pc" to 16.0,
+            "1px" to 1.0
         )
 
         values.forEach {

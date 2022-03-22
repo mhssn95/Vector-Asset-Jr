@@ -8,7 +8,7 @@ enum class MeasureUnits(val unit: String, val value: Double) {
     /**
      * [PX] is the default value
      */
-    PX("px", 0.0),
+    PX("px", 1.0),
 
     /**
      * [PT] is Points.
