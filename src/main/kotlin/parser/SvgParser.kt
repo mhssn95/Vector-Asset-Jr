@@ -5,7 +5,7 @@ import model.*
 import model.elements.*
 import model.style.Style
 import model.style.brush.fill.SolidColor
-import model.style.measure.MeasureConverter.Companion.convertToPX
+import model.style.measure.MeasureUnits.Companion.dpOrNull
 import org.w3c.dom.Document
 import org.w3c.dom.Node
 import org.xml.sax.InputSource
@@ -194,8 +194,8 @@ class SvgParser {
     }
 
     private fun getSvgSize(node: Node): Size? {
-        var width = node.getAttr("width")?.convertToPX()
-        val height = node.getAttr("height")?.convertToPX() ?: width
+        var width = node.getAttr("width")?.dpOrNull
+        val height = node.getAttr("height")?.dpOrNull ?: width
         if (width == null) {
             width = height
         }

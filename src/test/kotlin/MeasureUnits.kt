@@ -1,28 +1,28 @@
-import model.style.measure.MeasureConverter.Companion.convertToPX
+import model.style.measure.MeasureUnits.Companion.dpOrNull
 import org.junit.Assert
 import org.junit.Test
 
-class MeasureConverter {
+class MeasureUnits {
 
     @Test(expected = IllegalArgumentException::class)
     fun `convert unsupported unit`() {
         val width = "400pv"
 
-        width.convertToPX()
+        width.dpOrNull
     }
 
     @Test
     fun `convert unknown unit`() {
         val width = ""
 
-        Assert.assertNull(width.convertToPX())
+        Assert.assertNull(width.dpOrNull)
     }
 
     @Test
     fun `convert px to px`() {
         val width = "500"
 
-        Assert.assertEquals(width.convertToPX(), 500.0)
+        Assert.assertEquals(width.dpOrNull, 500.0)
     }
 
     @Test
@@ -37,7 +37,7 @@ class MeasureConverter {
         )
 
         values.forEach {
-            val value = String.format("%.3f",it.first.convertToPX()).toDouble()
+            val value = String.format("%.3f",it.first.dpOrNull).toDouble()
             Assert.assertEquals(it.second, value, delta)
         }
     }
