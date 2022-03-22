@@ -11,7 +11,6 @@ import org.xml.sax.InputSource
 import java.io.File
 import java.io.InputStream
 import java.io.StringReader
-import java.lang.Exception
 import javax.xml.parsers.DocumentBuilderFactory
 
 class SvgParser {
@@ -45,6 +44,25 @@ class SvgParser {
             svg.addElement(it)
         }
         return svg
+    }
+
+    fun getSvgSize(svg: File): Size? {
+        val factory = DocumentBuilderFactory.newInstance()
+        val builder = factory.newDocumentBuilder()
+        builder.setEntityResolver { _, _ ->
+            InputSource(StringReader(""))
+        }
+        val document = builder.parse(svg.inputStream())
+        val node = getSvgNode(document) ?: return null
+        var size = getSvgSize(node)
+        val viewBox = getSvgViewBox(node) ?: size
+        if (size == null) {
+            size = viewBox
+        }
+        if (size == null) {
+            throw IllegalArgumentException("invalid size")
+        }
+        return size
     }
 
     private fun fetch(node: Node, addElement: (SvgElement) -> Unit): SvgElement? {
