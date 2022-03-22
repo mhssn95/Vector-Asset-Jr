@@ -1,4 +1,4 @@
-package plugin;
+package plugin
 
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
@@ -58,7 +58,6 @@ class VectorAssetJrDialog(private val project: Project) : DialogWrapper(project,
     @OptIn(ExperimentalFoundationApi::class, ExperimentalComposeUiApi::class)
     override fun createCenterPanel(): JComponent? {
         val panel = ComposePanel()
-        val regex = Regex("\\D+")
         panel.setContent {
             var name = remember { mutableStateOf("") }
             var file = remember { mutableStateOf(File("")) }
