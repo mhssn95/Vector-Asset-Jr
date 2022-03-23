@@ -52,7 +52,7 @@ enum class MeasureUnits(val unit: String, val value: Double) {
          * @throws [IllegalArgumentException] if it match the [REGEX] and unit not implemented by this class
          */
 
-        inline val String.dpOrNull: Double?
+        inline val String.pixelOrNull: Double?
             get() {
                 val regex = "^\\d+[a-z]{2}$"
                 var size = this.toDoubleOrNull()

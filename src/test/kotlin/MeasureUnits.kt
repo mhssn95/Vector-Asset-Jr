@@ -1,4 +1,4 @@
-import model.style.measure.MeasureUnits.Companion.dpOrNull
+import model.style.measure.MeasureUnits.Companion.pixelOrNull
 import org.junit.Assert
 import org.junit.Test
 
@@ -8,21 +8,21 @@ class MeasureUnits {
     fun `convert unsupported unit`() {
         val width = "400pv"
 
-        width.dpOrNull
+        width.pixelOrNull
     }
 
     @Test
     fun `convert unknown unit`() {
         val width = ""
 
-        Assert.assertNull(width.dpOrNull)
+        Assert.assertNull(width.pixelOrNull)
     }
 
     @Test
     fun `convert px to px`() {
         val width = "500"
 
-        Assert.assertEquals(width.dpOrNull, 500.0)
+        Assert.assertEquals(width.pixelOrNull, 500.0)
     }
 
     @Test
@@ -38,7 +38,7 @@ class MeasureUnits {
         )
 
         values.forEach {
-            val value = String.format("%.3f",it.first.dpOrNull).toDouble()
+            val value = String.format("%.3f",it.first.pixelOrNull).toDouble()
             Assert.assertEquals(it.second, value, delta)
         }
     }
